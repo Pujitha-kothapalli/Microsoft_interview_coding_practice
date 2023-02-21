@@ -1,0 +1,26 @@
+class Solution {
+    List<Integer> res = new ArrayList<>();
+    int sub[];
+    public void largeSubset(int[] nums, int indx ,List<Integer> cur, int prev){
+        if(cur.size()>res.size()){
+            res = new ArrayList<>(cur);
+        }
+        for(int i=indx;i<nums.length;i++){
+            if(cur.size()>sub[i] && nums[i]%prev == 0){
+                sub[i] = cur.size();
+                cur.add(nums[i]);
+                largeSubset(nums,i+1,cur,nums[i]);
+                cur.remove(cur.size()-1);
+            }
+            
+        }
+    }
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        Arrays.sort(nums);
+        sub = new int[nums.length];
+        Arrays.fill(sub,-1);
+        largeSubset(nums,0,new ArrayList<Integer>(),1);
+        return res;
+        
+    }
+}
